@@ -11,6 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: keithweaver/aws-s3-github-action@v1.0.0
+        name: Copy Folder
         with:
           command: cp
           source: ./v1/
@@ -19,4 +20,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_region: ap-northeast-2
           flags: --recursive
+      - name: Verify Folder
+        run: |
+          echo "Verify folder"
 
