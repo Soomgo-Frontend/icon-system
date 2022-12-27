@@ -6,14 +6,14 @@ on:
       - dispatch-test
 
 jobs:
-  upload:
+  download:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: shallwefootball/s3-upload-action@master
+      - uses: keithweaver/aws-s3-github-action@v1.0.0
         with:
-          aws_key_id: ${{ secrets.AWS_KEY_ID }}
+          command: cp
+          source: ./v1/
+          destination: s3://soomgo-assets/icons/v1/
+          aws_access_key_id: ${{ secrets.AWS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-          aws_bucket: 'soomgo-assets'
-          source_dir: ${{ github.event.client_payload.file }}
-          destination_dir: 'icons'
