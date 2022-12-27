@@ -10,16 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: keithweaver/aws-s3-github-action@v1.0.0
-        name: Copy Folder
+      - uses: aws-actions/configure-aws-credentials@v1
+        name: Configure AWS credentials
         with:
-          command: cp
-          source: ./v1/
-          destination: s3://soomgo-assets/icons/v1/
-          aws_access_key_id: ${{ secrets.AWS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-          aws_region: ap-northeast-2
-          flags: --recursive
+          aws-access-key-id: ${{ secrets.AWS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ap-northeast-2
+      - name: Copy Folder
+        run: |
+          aws s3 cp s3://soomgo-assets/icons/v1/ . --recursive
       - name: Verify Folder
         run: |
           echo "Verify folder"
